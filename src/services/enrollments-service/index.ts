@@ -57,7 +57,7 @@ function getFirstAddress(firstAddress: Address): GetAddressResult {
 type GetAddressResult = Omit<Address, "createdAt" | "updatedAt" | "enrollmentId">;
 
 async function createOrUpdateEnrollmentWithAddress(params: CreateOrUpdateEnrollmentWithAddress) {
-  const enrollment = exclude(params, "address");
+  const enrollment = exclude(params, "address") as Enrollment;
   const address = getAddressForUpsert(params.address);
   const result = await getAddressFromCEP(address.cep);
 
