@@ -41,6 +41,9 @@ async function createTicket(userId: number, ticketTypeId: number): Promise<Ticke
 
 export type CreateTicketParams = Pick<Ticket, "ticketTypeId">;
 
+export type UpdateTicketParams = Omit<Ticket, "id" | "createdAt" | "updatedAt">;
+
+
 const ticketsService = {
     getTicketsFromUser,
     getTicketTypes,
