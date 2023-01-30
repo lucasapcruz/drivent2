@@ -11,8 +11,10 @@ export async function getUserTicket(req: AuthenticatedRequest, res: Response) {
 
     return res.status(httpStatus.OK).send(ticketWithTicketTypes);
   } catch (error) {
-    console.log(error)
-    return res.sendStatus(httpStatus.NO_CONTENT);
+    if(error.name === "RequestError"){
+      return res.status(error.status).send(error.statusText);
+    }
+    return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
   }
 }
 
@@ -22,7 +24,9 @@ export async function getTicketTypes(req: AuthenticatedRequest, res: Response) {
 
     return res.status(httpStatus.OK).send(ticketTypes);
   } catch (error) {
-    console.log(error)
-    return res.sendStatus(httpStatus.NO_CONTENT);
+    if(error.name === "RequestError"){
+      return res.status(error.status).send(error.statusText);
+    }
+    return res.sendStatus(httpStatus.INTERNAL_SERVER_ERROR);
   }
 }
