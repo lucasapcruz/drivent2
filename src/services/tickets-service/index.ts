@@ -27,9 +27,24 @@ async function getTicketTypes(): Promise<TicketType[]> {
   return ticketTypes
 }
 
+async function createTicket(userId: number, ticketTypeId: number): Promise<Ticket> {
+
+  const enrollment = await enrollmentRepository.findWithAddressByUserId(userId)
+  if(!enrollment){
+    throw requestError(httpStatus.NOT_FOUND, "User doesn't have an enrollment yet");
+  }
+
+  const createdTicket = await ticketsRepository.createTicket(enrollment.id, ticketTypeId);
+
+  return createdTicket
+}
+
+export type CreateTicketParams = Pick<Ticket, "ticketTypeId">;
+
 const ticketsService = {
     getTicketsFromUser,
-    getTicketTypes
+    getTicketTypes,
+    createTicket
 };
 
 export default ticketsService;
