@@ -2,7 +2,7 @@ import { notFoundError } from "@/errors";
 import enrollmentRepository from "@/repositories/enrollment-repository";
 import ticketsRepository from "@/repositories/tickets-repository";
 import { exclude } from "@/utils/prisma-utils";
-import { Event, Ticket } from "@prisma/client";
+import { Event, Ticket, TicketType } from "@prisma/client";
 import dayjs from "dayjs";
 
 async function getTicketsFromUser(userId: number): Promise<Ticket> {
@@ -19,8 +19,16 @@ async function getTicketsFromUser(userId: number): Promise<Ticket> {
   return ticket;
 }
 
+async function getTicketTypes(): Promise<TicketType[]> {
+
+  const ticketTypes = await ticketsRepository.findTicketTypes();
+
+  return ticketTypes
+}
+
 const ticketsService = {
     getTicketsFromUser,
+    getTicketTypes
 };
 
 export default ticketsService;

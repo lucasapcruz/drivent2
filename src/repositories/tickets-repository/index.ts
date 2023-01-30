@@ -10,8 +10,13 @@ async function findTicketWithTicketTypesByEnrollmentId(enrollmentId: number) {
   });
 }
 
+async function findTicketTypes() {
+  return prisma.ticketType.findMany();
+}
+
 const ticketsRepository = {
     findTicketWithTicketTypesByEnrollmentId,
+    findTicketTypes
 };
 
 export default ticketsRepository;
